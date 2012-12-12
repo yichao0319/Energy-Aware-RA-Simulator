@@ -1,0 +1,52 @@
+#####
+## input data
+rawTrace/*
+simulator/*.mat
+simulator/perdata.dat
+ChanTraces/
+
+
+#####
+## output data
+Prediction/ProcessedData/*
+plot_dir/*
+pre-process/figures/*
+pre-process/matlab
+Prediction/Scripts/plot_dir/*data/
+Prediction/Scripts/plot_dir/*figures/
+Prediction/Scripts/plot_dir/*/*data/
+Prediction/Scripts/plot_dir/*/*figures/
+Prediction/Scripts/plot_dir/*/*eps
+Prediction/Data/
+Prediction/PPrProcessedData/
+Prediction/oracle_results/
+
+
+#####
+## paper
+infocom
+cvs
+
+
+#####
+## unused codes
+condor_file_generator.py
+condor_file_generator_engtput.py
+run.sh
+Prediction/Scripts/plot_*.py
+Prediction/Scripts/test_*
+Prediction/Scripts/legend.py
+plot_analysis_ant.plot
+plot_analysis_mcs.plot
+plot_analysis_trace2scheme.plot
+Prediction/power
+
+
+#####
+## compile output
+simulator/*pyc
+Prediction/Scripts/legen.png
+Prediction/Scripts/*pyc
+Prediction/Scripts/*pyc
+
+

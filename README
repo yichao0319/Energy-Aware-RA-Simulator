@@ -1,0 +1,92 @@
+#####
+## Project: rate adaptation to minimize power consumption
+
+
+#####
+## directory structure
+- power
+  - simulator
+  - Prediction
+    - Data
+      - MobileTrace  
+      - StaticTrace
+    - ProcessedData
+      - [static1 | static2 | static3 | facespeed11 | facespeed21 | facespeed31 | sidespeed11 | sidespeed21 ]
+        - [atheros | intel]
+          - [tx | rx]
+    - oracle_results
+  - pre-process
+  - ChanTraces
+  
+
+
+#####
+## Trace files
+we need to first pre-process CSI traces to remove initial phases:
+  pre-process/analyze_csi2.m
+  pre-process/analyze_csi.m
+
+the traces could be available in:
+  /u/yichao/csi_measurement/csi_measurement/raw_data/mobile_trace
+
+
+#####
+## submit condor jobs
+python condor_file_generator_offset.py  -- for EffSnr, MaxTput, MinEng schems
+python condor_file_generator_offset_engtput.py -- for EngTput schemes
+python dispatcher.py
+  
+  1. input of simulator
+    - ChanTraces
+
+  2. modify the main function in condor_file_generator_offset.py to specify which schemes to run:
+    - list_items: trace file name
+    - pred: use previous measurement as prediction or use Holt-Winters
+    - card_types: intel or atheros
+    - constraint: tx or rx
+    - increment: use every n pkts
+
+  3. output of simulator
+    - Trace
+
+#####
+## post-process simulation result
+Prediction/Scripts/process_static_data.py
+Prediction/Scripts/process_mobile_data.py
+
+
+  1. copy the output of simulator for post-processing
+    - Prediction/Data/[MobileTrace | StaticTrace]
+
+    e.g. 
+      cp Trace/* Prediction/Data/MobileTrace/
+
+  2. prepare the directory structure
+    - Prediction/ProcessedData
+
+  3. modify the main function in process_mobile_data.py or process_static_data.py
+    - channames: file name
+    - protocols: now just EffSnr, MaxTput, MinEng
+    - other modification might be necessary
+
+
+#####
+## plot the results
+analyze_output.pl
+  - plot_analysis_ant.mother.plot
+  - plot_analysis_mcs.mother.plot
+  - plot_analysis_succ.mother.plot
+plot_ppr_trace2scheme.pl
+  - plot_trace2scheme.mother.plot
+plot_trace2scheme.pl
+  - plot_ppr_trace2scheme.mother.plot
+
+
+#####
+## simulation results for oracle
+Prediction/oracle_results/
+
+
+
+
+
