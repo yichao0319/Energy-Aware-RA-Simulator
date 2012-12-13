@@ -129,4 +129,4 @@ class OraclePPrEngTputRA(BaseRA):
         #self.file.write(str(trace)+str('\n'))
 
 
-        return {'mod':mcs,'mode':mode}
+        return {'mcs':mcs,'mode':mode}

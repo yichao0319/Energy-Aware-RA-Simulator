@@ -99,10 +99,8 @@ def main():
     # channames = ['mob_recv1_run1_01', 'mob_recv2_run1_01', 'mob_recv3_run1_01', 'mob_recv4_run1_01']
     channames = ['sender1_lap1_seg1_mix1', 'sender1_lap1_seg2_mix1', 'sender1_lap1_seg3_mix1']
 
-    #channames = ['static1']
-    # protocols=['OraclePPrMinEng','OraclePPrMaxTput','OraclePPrEngTput10',\
-    #             'OraclePPrEngTput09','OraclePPrEngTput08','OraclePPrEngTput07','OraclePPrEngTput06']
-    protocols =['PPrMaxTput','PPrMinEng','PPrEngTput10','PPrEngTput09','PPrEngTput08','PPrEngTput07','PPrEngTput06','PPrEngTput05','PPrEngTput04','PPrEngTput03','PPrEngTput02','PPrEngTput01']
+    # protocols =['PPrMaxTput','PPrMinEng','PPrEngTput10','PPrEngTput09','PPrEngTput08','PPrEngTput07','PPrEngTput06','PPrEngTput05','PPrEngTput04','PPrEngTput03','PPrEngTput02','PPrEngTput01']
+    protocols = ['OraclePPrMaxTput', 'OraclePPrMinEng','OraclePPrEngTput10','OraclePPrEngTput09','OraclePPrEngTput08','OraclePPrEngTput07','OraclePPrEngTput06','OraclePPrEngTput05','OraclePPrEngTput04','OraclePPrEngTput03','OraclePPrEngTput02','OraclePPrEngTput01']
     card_type=['intel','atheros']
     #card_type=['intel']
     eng_cnstrnt=['tx','rx']
@@ -134,11 +132,26 @@ def main():
                         if 'EngTput' in protocol:
                             et_th = th_map(protocol)
                             prtcl = protocol[:-2]
-                            # filename = 'RxOracle_'+prtcl+refname+'th'+str(et_th)+'_inc'+inc+'.dat'
-                            filename = prtcl+refname+'th'+str(et_th)+'_inc'+inc+'.dat'
+
+                            if 'Oracle' in protocol:
+                                if pred == 'True':
+                                    continue
+
+                                filename = 'RxOracle_' + prtcl + refname + 'th' + str(et_th) + '_inc1.dat'
+
+                            else:
+                                # filename = 'RxOracle_'+prtcl+refname+'th'+str(et_th)+'_inc'+inc+'.dat'
+                                filename = prtcl + refname + 'th' + str(et_th) + '_inc1.dat'
 
                         elif protocol == 'SampleRate':
                             filename = protocol+refname+'_inc'+inc+'.dat'
+
+                        elif 'Oracle' in protocol:
+                            if pred == 'True':
+                                continue
+
+                            filename = 'RxOracle_' + protocol + refname + '_inc1.dat'
+
                         else:
                             # filename = 'RxOracle_'+protocol+refname+'_inc'+inc+'.dat'
                             filename = protocol+refname+'_inc'+inc+'.dat'

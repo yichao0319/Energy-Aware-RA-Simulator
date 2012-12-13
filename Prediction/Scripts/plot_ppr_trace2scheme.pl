@@ -32,6 +32,7 @@ my @traces = (@static_traces, @mobile_traces, @mobile_traces2, @mobile_traces3, 
 # my @traces = ("static1", "static2", "static3");
 # my @schemes = ("PPrMinEng", "PPrMaxTput", "PPrEngTput08", "PPrEngTput06", "PPrEngTput04", "PPrEngTput02");
 my @schemes = ("PPrMinEng", "PPrMaxTput", "PPrEngTput08", "PPrEngTput06");
+# my @schemes = ("PPrMinEng", "OraclePPrMinEng", "PPrMaxTput", "OraclePPrMaxTput", "PPrEngTput08", "PPrEngTput06");
 my @card_types = ("atheros", "intel");
 my @constraints = ("tx", "rx");
 my @predictions = ("True", "False");
@@ -50,6 +51,7 @@ foreach my $card_type (@card_types) {
                 ## prediction 1 (previous pkt)
                 ## prediction 2 (Holt-Winters)
                 foreach my $prediction (@predictions) {
+                    next if $prediction eq 'True' && $scheme =~ /Oracle/;
                     my $this_file = "$input_dir/$trace/$card_type/$constraint/$scheme$prediction.dat";
                     my ($tput, $energy) = get_tput_eng_from_file($this_file);
                     $data{throughput}{$trace}{$prediction}{$scheme} = $tput;
@@ -133,7 +135,7 @@ sub get_tput_eng_from_file {
 
     if(!(-e $filename)) {
         print $filename." does not exist\n";
-        die $!;
+        # die $!;
         return ($tput, $energy);
     }
 
@@ -160,7 +162,7 @@ sub get_tput_eng_from_file {
 sub write_to_file_trace2scheme {
     my ($filename, $ref_data, $type, $ref_traces, $ref_schemes) = @_;
 
-    my $pred = 'True';
+    my $pred = 'False';
 
     open FH, ">$filename" or die $!;
 

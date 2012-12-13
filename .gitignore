@@ -2,13 +2,15 @@
 ## input data
 rawTrace/*
 simulator/*.mat
-simulator/perdata.dat
 ChanTraces/
 
 
 #####
 ## output data
-Prediction/ProcessedData/*
+*.cnd
+err
+log
+out
 plot_dir/*
 pre-process/figures/*
 pre-process/matlab
@@ -18,6 +20,7 @@ Prediction/Scripts/plot_dir/*/*data/
 Prediction/Scripts/plot_dir/*/*figures/
 Prediction/Scripts/plot_dir/*/*eps
 Prediction/Data/
+Prediction/ProcessedData/*
 Prediction/PPrProcessedData/
 Prediction/oracle_results/
 

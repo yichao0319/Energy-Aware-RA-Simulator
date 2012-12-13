@@ -90,7 +90,8 @@ def main():
     # channames = ['static1']
     # protocols=['OracleEffSnr', 'OracleMinEng','OracleMaxTput','SampleRate','OracleEngTput10',\
     #            'OracleEngTput09','OracleEngTput08','OracleEngTput07','OracleEngTput06']
-    protocols =['EffSnr','MaxTput','MinEng','EngTput10','EngTput09','EngTput08','EngTput07','EngTput06','EngTput05','EngTput04','EngTput03','EngTput02','EngTput01','SampleRate']
+    # protocols =['EffSnr','MaxTput','MinEng','EngTput10','EngTput09','EngTput08','EngTput07','EngTput06','EngTput05','EngTput04','EngTput03','EngTput02','EngTput01','SampleRate']
+    protocols = ['OracleEffSnr', 'OracleMaxTput', 'OracleMinEng', 'OracleEngTput10', 'OracleEngTput09', 'OracleEngTput08', 'OracleEngTput07', 'OracleEngTput06', 'OracleEngTput05', 'OracleEngTput04', 'OracleEngTput03', 'OracleEngTput02', 'OracleEngTput01']
     # protocols = ["OracleMinEng", "OracleMaxTput", "OracleEffSnr"]
     # protocols =['EffSnr','MaxTput','MinEng']
     card_type=['intel','atheros']
@@ -106,13 +107,21 @@ def main():
                 for c in eng_cnstrnt:
                     for pred in prediction:
 
-                        refname = '_'+chan+'_'+card+'_'+c+'_pred'+pred
+                        refname = '_' + chan + '_' + card + '_' + c + '_pred' + pred
 
                         if 'EngTput' in protocol:
                             et_th = th_map(protocol)
                             prtcl = protocol[:-2]
-                            #filename = 'RxOracle_'+prtcl+refname+'th'+str(et_th)+'_inc1.dat'
-                            filename = prtcl+refname+'th'+str(et_th)+'_inc1.dat'
+
+                            if 'Oracle' in protocol:
+                                if pred == 'True':
+                                    continue
+
+                                filename = 'RxOracle_' + prtcl + refname + 'th' + str(et_th) + '_inc1.dat'
+
+                            else:
+                                #filename = 'RxOracle_'+prtcl+refname+'th'+str(et_th)+'_inc1.dat'
+                                filename = prtcl + refname + 'th' + str(et_th) + '_inc1.dat'
 
                         elif protocol == 'SampleRate':
                             filename = protocol + refname + '_inc1.dat'

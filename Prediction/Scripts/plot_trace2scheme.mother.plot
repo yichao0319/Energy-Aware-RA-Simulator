@@ -26,7 +26,9 @@ set output fig_dir."XXX_FILE.eps"
 plot \
 data_dir.'XXX_FILE.txt' using 2:xtic(1) t '{/Helvetica=28 EffSnr}', \
 data_dir.'XXX_FILE.txt' using 3:xtic(1) t '{/Helvetica=28 MinEng}', \
-data_dir.'XXX_FILE.txt' using 4:xtic(1) t '{/Helvetica=28 MaxTput}', \
-data_dir.'XXX_FILE.txt' using 5:xtic(1) t '{/Helvetica=28 SRate}', \
-data_dir.'XXX_FILE.txt' using 6:xtic(1) t '{/Helvetica=28 ETput80}', \
-data_dir.'XXX_FILE.txt' using 7:xtic(1) t '{/Helvetica=28 ETput60}'
+data_dir.'XXX_FILE.txt' using 4:xtic(1) t '{/Helvetica=28 OracleMinEng}', \
+data_dir.'XXX_FILE.txt' using 5:xtic(1) t '{/Helvetica=28 MaxTput}', \
+data_dir.'XXX_FILE.txt' using 6:xtic(1) t '{/Helvetica=28 OracleMaxTput}', \
+data_dir.'XXX_FILE.txt' using 7:xtic(1) t '{/Helvetica=28 SRate}', \
+data_dir.'XXX_FILE.txt' using 8:xtic(1) t '{/Helvetica=28 ETput80}', \
+data_dir.'XXX_FILE.txt' using 9:xtic(1) t '{/Helvetica=28 ETput60}'
