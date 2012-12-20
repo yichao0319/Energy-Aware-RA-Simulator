@@ -123,12 +123,5 @@ iv) plot the throughput and energy of optimizing RX, TX only, or both
       Prediction/Scripts/plot_dir/txrx_figures
 
 
-#####
-## simulation results for oracle
-Prediction/oracle_results/
-
-
-
-
 
 
