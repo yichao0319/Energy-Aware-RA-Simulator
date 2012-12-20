@@ -16,7 +16,6 @@ pre-process/figures/*
 pre-process/matlab
 Prediction/Scripts/plot_dir/*data/
 Prediction/Scripts/plot_dir/*figures/
-Prediction/Scripts/plot_dir/*/*data/
 Prediction/Scripts/plot_dir/*/*figures/
 Prediction/Scripts/plot_dir/*/*eps
 Prediction/Data/

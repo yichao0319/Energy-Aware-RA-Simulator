@@ -1,0 +1,34 @@
+set terminal postscript eps enhanced monochrome 28
+
+set size 1,0.8
+
+set style data histogram
+set style histogram gap 1
+set style fill solid border -1
+set boxwidth 0.9
+
+set style fill pattern 
+set palette gray
+
+data_dir = "./"
+fig_dir = "../figures/"
+
+set yrange [0:]
+
+# set xlabel "traces";
+set ylabel "Energy (nJ/bit)";
+set nokey;
+# set key Left above reverse horizontal nobox spacing 0.9
+# set key outside right
+set output fig_dir."static_atheros_tx.trace2scheme.eng.eps"
+
+
+plot \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 2:xtic(1) t '{/Helvetica=28 EffSnr}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 3:xtic(1) t '{/Helvetica=28 MinEng}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 4:xtic(1) t '{/Helvetica=28 OracleMinEng}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 5:xtic(1) t '{/Helvetica=28 MaxTput}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 6:xtic(1) t '{/Helvetica=28 OracleMaxTput}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 7:xtic(1) t '{/Helvetica=28 SRate}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 8:xtic(1) t '{/Helvetica=28 ETput80}', \
+data_dir.'static_atheros_tx.trace2scheme.eng.txt' using 9:xtic(1) t '{/Helvetica=28 ETput60}'
