@@ -41,14 +41,10 @@ def main():
 
     pred = ['True', 'False']
     #pred= ['True']
-    # scheme = ["mineng", "maxtput", "effsnr", "samplerate", "pprmineng", "pprmaxtput"]
-    scheme = ["oracle_mineng", "oracle_maxtput", "oracle_effsnr", "oracle_pprmineng", "oracle_pprmaxtput"]
-    # scheme = ["oracle_mineng", "oracle_maxtput", "oracle_effsnr"]
-    # scheme = ["pprmineng", "pprmaxtput"]
-    # scheme = ["effsnr",'effsnr_mineng','samplerate']
-    # scheme = ["samplerate"]
+    scheme = ["mineng", "maxtput", "effsnr", "samplerate", "pprmineng", "pprmaxtput"]
+    # scheme = ["oracle_mineng", "oracle_maxtput", "oracle_effsnr", "oracle_pprmineng", "oracle_pprmaxtput"]
     card_types = ["intel", "atheros"]
-    constraint = ["tx", "rx"]
+    constraint = ["tx", "rx", "tx_rx"]
     #increment = [1, 4, 10]
     increment = [1]
 

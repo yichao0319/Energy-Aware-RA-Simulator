@@ -77,6 +77,7 @@ class PPrMaxTputRA(BaseRA):
         energyfnc = eval(card_energy)
         if self.econstraint == 'tx': nant = ntx
         elif self.econstraint == 'rx': nant = nrx
+        elif self.econstraint == 'tx_rx': nant = (ntx,nrx)
         else: assert 0 ,'invalid energy constraint selection'
         modulation = MODULATION[mcs]
         ber = self.ber[mode][modulation]

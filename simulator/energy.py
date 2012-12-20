@@ -36,6 +36,17 @@ def intel_rx_energy(nrx,Nss,plen,mcs,per):
     est_energy = (0.30*nrx + 0.61)*ett + (0.064*nrx + 0.167) 
     return est_energy
 
+def intel_tx_rx_energy(nant,Nss,plen,mcs,per):
+
+    ntx = nant[0]
+    nrx = nant[1]
+    energy_tx = intel_tx_energy(ntx,Nss,plen,mcs,per)
+    energy_rx = intel_rx_energy(nrx,Nss,plen,mcs,per)
+
+    est_energy = energy_tx + energy_rx
+    return est_energy
+
+
 def atheros_tx_energy(ntx,Nss,plen,mcs,per):
 
     ett = find_ett(mcs,Nss,plen,per)
@@ -48,6 +59,19 @@ def atheros_rx_energy(nrx,Nss,plen,mcs,per):
     ett = find_ett(mcs,Nss,plen,per)
     est_energy  =( 0.142*nrx + 0.30)*ett + ( 0.048*nrx + 0.106) 
     return est_energy
+
+def atheros_tx_rx_energy(nant,Nss,plen,mcs,per):
+
+    ntx = nant[0]
+    nrx = nant[1]
+    energy_tx = atheros_tx_energy(ntx,Nss,plen,mcs,per)
+    energy_rx = atheros_rx_energy(nrx,Nss,plen,mcs,per)
+
+    est_energy = energy_tx + energy_rx
+    return est_energy
+
+
+
 
 def find_ett_ppr(mod,Nss,plen,ber):
 
@@ -75,6 +99,16 @@ def intel_rx_energy_ppr(nrx,Nss,plen,mcs,ber):
     est_energy = (0.30*nrx + 0.61)*ett + (0.064*nrx + 0.167) 
     return est_energy
 
+def intel_tx_rx_energy_ppr(nant,Nss,plen,mcs,ber):
+
+    ntx = nant[0]
+    nrx = nant[1]
+    energy_tx = intel_tx_energy_ppr(ntx,Nss,plen,mcs,ber)
+    energy_rx = intel_rx_energy_ppr(nrx,Nss,plen,mcs,ber)
+
+    est_energy = energy_tx + energy_rx
+    return est_energy
+
 def atheros_tx_energy_ppr(ntx,Nss,plen,mcs,ber):
 
     ett = find_ett_ppr(mcs,Nss,plen,ber)
@@ -85,6 +119,17 @@ def atheros_rx_energy_ppr(nrx,Nss,plen,mcs,ber):
 
     ett = find_ett_ppr(mcs,Nss,plen,ber)
     est_energy  =( 0.142*nrx + 0.30)*ett + ( 0.048*nrx + 0.106) 
+    return est_energy
+
+
+def atheros_tx_rx_energy_ppr(nant,Nss,plen,mcs,ber):
+
+    ntx = nant[0]
+    nrx = nant[1]
+    energy_tx = atheros_tx_energy_ppr(ntx,Nss,plen,mcs,ber)
+    energy_rx = atheros_rx_energy_ppr(nrx,Nss,plen,mcs,ber)
+
+    est_energy = energy_tx + energy_rx
     return est_energy
 
 

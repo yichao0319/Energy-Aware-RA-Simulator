@@ -60,6 +60,7 @@ class MinEngRA(BaseRA):
             energyfnc = eval(card_energy)
             if self.econstraint == 'tx': nant = ntx
             elif self.econstraint == 'rx': nant = nrx
+            elif self.econstraint == 'tx_rx': nant = (ntx,nrx)
             else: assert 0 ,'invalid energy constraint selection'
             self.est_energy[key] = [energyfnc(nant,nss,plen,mcs,0.0) for mcs in range(0,8)]
 
@@ -95,7 +96,7 @@ class MinEngRA(BaseRA):
                     minmode = key
 
         #If this called it means that there is no configuration with per < 0.1
-	if minmode == 0:            
+        if minmode == 0:            
             minmode = 'sm 1by1 AA'
             minmcs = 0
             mineng = self.est_energy[minmode][minmcs]

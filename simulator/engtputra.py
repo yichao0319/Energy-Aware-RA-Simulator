@@ -28,6 +28,7 @@ class EngTputRA(BaseRA):
             energyfnc = eval(card_energy)
             if self.econstraint == 'tx': nant = ntx
             elif self.econstraint == 'rx': nant = nrx
+            elif self.econstraint == 'tx_rx': nant = (ntx,nrx)
             else: assert 0 ,'invalid energy constraint selection'
             self.est_energy[key] = [energyfnc(nant,nss,plen,mcs,0.0) for mcs in range(0,8)]
             

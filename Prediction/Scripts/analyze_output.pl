@@ -258,8 +258,7 @@ sub get_statistics_from_file {
 
 
     if(!(-e $filename)) {
-        print $filename." does not exist\n";
-        return ($tput, $energy);
+        die $filename." does not exist\n";
     }
 
     open FH, "<$filename" or die "$!\n$filename\n";

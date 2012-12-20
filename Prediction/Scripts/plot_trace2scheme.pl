@@ -27,7 +27,8 @@ my @mobile_traces2 = ('sender1_lap1_seg11', 'sender1_lap3_seg31', 'sender3_lap1_
 my @mobile_traces3 = ('mob_recv1_run1_01', 'mob_recv2_run1_01', 'mob_recv3_run1_01');
 my @mobile_traces4 = ('sender1_lap1_seg1_mix1', 'sender1_lap1_seg2_mix1', 'sender1_lap1_seg3_mix1');
 my @static_traces2 = ('static_sender2_3tx_run1', 'static_sender2_3tx_run2', 'static_sender2_3tx_run3');
-my @traces = (@static_traces, @mobile_traces, @mobile_traces2, @mobile_traces3, @mobile_traces4, @static_traces2);
+# my @traces = (@static_traces, @mobile_traces, @mobile_traces2, @mobile_traces3, @mobile_traces4, @static_traces2);
+my @traces = (@mobile_traces4, @static_traces2);
 # my @mobile_traces = ("facespeed11", "facespeed21", "facespeed31", "sidespeed11", "sidespeed21");
 # my @traces = ("static1", "static2", "static3");
 my @schemes = ("EffSnr", "MinEng", "OracleMinEng", "MaxTput", "OracleMaxTput", "SampleRate", "EngTput08", "EngTput06");
@@ -52,9 +53,11 @@ foreach my $card_type (@card_types) {
                 ## prediction 2 (Holt-Winters)
                 foreach my $prediction (@predictions) {
                     my $this_file = "$input_dir/$trace/$card_type/$constraint/$scheme$prediction.dat";
-                    my ($tput, $energy) = get_tput_eng_from_file($this_file);
+                    my ($tput, $energy, $energy_tx, $energy_rx) = get_tput_eng_from_file($this_file);
                     $data{throughput}{$trace}{$prediction}{$scheme} = $tput;
-                    $data{energy}{$trace}{$prediction}{$scheme} = $energy;
+                    $data{energy_tx_rx}{$trace}{$prediction}{$scheme} = $energy;
+                    $data{energy_tx}{$trace}{$prediction}{$scheme} = $energy_tx;
+                    $data{energy_rx}{$trace}{$prediction}{$scheme} = $energy_rx;
                 }
             }
         }   ## end for each trace
@@ -67,7 +70,7 @@ foreach my $card_type (@card_types) {
         write_to_file_trace2scheme($this_file, \%{$data{throughput}}, 'static', \@static_traces2, \@schemes);
         my $out_filename_eng = "static_".$card_type."_".$constraint.".trace2scheme.eng";
         $this_file = "$output_data_dir/$out_filename_eng.txt";
-        write_to_file_trace2scheme($this_file, \%{$data{energy}}, 'static', \@static_traces2, \@schemes);
+        write_to_file_trace2scheme($this_file, \%{$data{'energy_'.$constraint}}, 'static', \@static_traces2, \@schemes);
 
         
         ##    - generate gnuplot script
@@ -97,7 +100,7 @@ foreach my $card_type (@card_types) {
         write_to_file_trace2scheme($this_file, \%{$data{throughput}}, 'mobile', \@mobile_traces4, \@schemes);
         $out_filename_eng = "mobile_".$card_type."_".$constraint.".trace2scheme.eng";
         $this_file = "$output_data_dir/$out_filename_eng.txt";
-        write_to_file_trace2scheme($this_file, \%{$data{energy}}, 'mobile', \@mobile_traces4, \@schemes);
+        write_to_file_trace2scheme($this_file, \%{$data{'energy_'.$constraint}}, 'mobile', \@mobile_traces4, \@schemes);
 
         
         ##      - generate gnuplot script
@@ -131,6 +134,8 @@ sub get_tput_eng_from_file {
     print "get $filename\n" if($DEBUG0);
     my $tput = 0;
     my $energy = 0;
+    my $energy_tx = 0;
+    my $energy_rx = 0;
 
     if(!(-e $filename)) {
         print $filename." does not exist\n";
@@ -143,6 +148,14 @@ sub get_tput_eng_from_file {
         if($_ =~ /{'tput': (\d+\.*\d*), 'eng': (\d+\.*\d*e*-*\d*)}/) {
             $tput = ($1 + 0) / 1000000; ## Mbps
             $energy = ($2 + 0) / 1e-6;
+            $energy_tx = $energy;
+            $energy_rx = $energy;
+        }
+        elsif($_ =~ /{'eng_tx': (\d+\.*\d*e*-*\d*), 'tput': (\d+\.*\d*e*-*\d*), 'eng_rx': (\d+\.*\d*e*-*\d*), 'eng': (\d+\.*\d*e*-*\d*)}/) {
+            $tput = ($2 + 0) / 1000000; ## Mbps
+            $energy_tx = ($1 + 0) / 1e-6;
+            $energy_rx = ($3 + 0) / 1e-6;
+            $energy = ($4 + 0) / 1e-6;
         }
         else {
             print $filename."\n".$_."\n";
@@ -152,7 +165,7 @@ sub get_tput_eng_from_file {
     }
     close(FH);
 
-    return ($tput, $energy);
+    return ($tput, $energy, $energy_tx, $energy_rx);
 }
 
 

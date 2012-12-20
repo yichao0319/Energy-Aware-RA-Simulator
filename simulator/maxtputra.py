@@ -67,6 +67,7 @@ class MaxTputRA(BaseRA):
         energyfnc = eval(card_energy)
         if self.econstraint == 'tx': nant = ntx
         elif self.econstraint == 'rx': nant = nrx
+        elif self.econstraint == 'tx_rx': nant = (ntx,nrx)
         else: assert 0 ,'invalid energy constraint selection'
         eng = energyfnc(nant,nss,self.plen,mcs,self.per[mode][mcs])
         #eng = rx_energy(nrx,nss,self.plen,mcs,self.per[mode][mcs])

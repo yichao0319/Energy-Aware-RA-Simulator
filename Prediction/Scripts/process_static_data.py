@@ -37,6 +37,8 @@ def calc_energy(mode,mcs,succ,card,trv,pktsize):
         nant = [get_ntx_from_key(m) for m in mode]
     elif trv=='rx':
         nant = [get_nrx_from_key(m) for m in mode]
+    elif trv == 'tx_rx':
+        nant = [(get_ntx_from_key(m),get_nrx_from_key(m)) for m in mode]
     else:
         print "this should never happen"
     nss = [get_nss_from_key(m) for m in mode]
@@ -59,12 +61,17 @@ def eval_protocol(file,card,trv):
     mode = [line['mode'] for line in data]   
 
     pktsize = 1000 #Bytes
-    # energy needs to be calculated
-    eng_per_bit = calc_energy(mode,mcs,succ,card,trv,pktsize)
-
     per = calc_per(succ)
     tput = calc_tput(mode,mcs,succ,pktsize)
-    return {'tput':tput, 'eng':eng_per_bit}
+    
+    # energy needs to be calculated
+    # eng_per_bit = calc_energy(mode,mcs,succ,card,trv,pktsize)
+    # return {'tput':tput, 'eng':eng_per_bit}
+    eng_per_bit_rx = calc_energy(mode, mcs, succ, card, 'rx', pktsize)
+    eng_per_bit_tx = calc_energy(mode, mcs, succ, card, 'tx', pktsize)
+    eng_per_bit_sum = eng_per_bit_rx + eng_per_bit_tx
+
+    return {'tput':tput, 'eng':eng_per_bit_sum, 'eng_rx':eng_per_bit_rx, 'eng_tx':eng_per_bit_tx}
  
 def get_file_data(path,filename,card,trv):
 
@@ -90,13 +97,12 @@ def main():
     # channames = ['static1']
     # protocols=['OracleEffSnr', 'OracleMinEng','OracleMaxTput','SampleRate','OracleEngTput10',\
     #            'OracleEngTput09','OracleEngTput08','OracleEngTput07','OracleEngTput06']
-    # protocols =['EffSnr','MaxTput','MinEng','EngTput10','EngTput09','EngTput08','EngTput07','EngTput06','EngTput05','EngTput04','EngTput03','EngTput02','EngTput01','SampleRate']
-    protocols = ['OracleEffSnr', 'OracleMaxTput', 'OracleMinEng', 'OracleEngTput10', 'OracleEngTput09', 'OracleEngTput08', 'OracleEngTput07', 'OracleEngTput06', 'OracleEngTput05', 'OracleEngTput04', 'OracleEngTput03', 'OracleEngTput02', 'OracleEngTput01']
+    protocols =['EffSnr','MaxTput','MinEng','EngTput10','EngTput09','EngTput08','EngTput07','EngTput06','EngTput05','EngTput04','EngTput03','EngTput02','EngTput01','SampleRate']
+    # protocols = ['OracleEffSnr', 'OracleMaxTput', 'OracleMinEng', 'OracleEngTput10', 'OracleEngTput09', 'OracleEngTput08', 'OracleEngTput07', 'OracleEngTput06', 'OracleEngTput05', 'OracleEngTput04', 'OracleEngTput03', 'OracleEngTput02', 'OracleEngTput01']
     # protocols = ["OracleMinEng", "OracleMaxTput", "OracleEffSnr"]
     # protocols =['EffSnr','MaxTput','MinEng']
     card_type=['intel','atheros']
-    #card_type=['intel']
-    eng_cnstrnt=['tx','rx']
+    eng_cnstrnt=['tx', 'rx', 'tx_rx']
     prediction=['True','False'] #'True','False'
 
     finaldata={}

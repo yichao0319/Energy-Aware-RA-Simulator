@@ -12,10 +12,9 @@ This is the simulator wirtten by Muhammad O Khan (owais DOT khan AT utexas DOT e
       - MobileTrace  
       - StaticTrace
     - ProcessedData
-      - [static1 | static2 | static3 | facespeed11 | facespeed21 | facespeed31 | sidespeed11 | sidespeed21 ]
+      - [static1 | static2 | static3 | facespeed11 | ... ]
         - [atheros | intel]
-          - [tx | rx]
-    - oracle_results
+          - [tx | rx | txrx]
   - pre-process
   - ChanTraces
   
@@ -73,14 +72,55 @@ Prediction/Scripts/process_mobile_data.py
 
 #####
 ## plot the results
-analyze_output.pl
-  - plot_analysis_ant.mother.plot
-  - plot_analysis_mcs.mother.plot
-  - plot_analysis_succ.mother.plot
-plot_ppr_trace2scheme.pl
-  - plot_trace2scheme.mother.plot
-plot_trace2scheme.pl
-  - plot_ppr_trace2scheme.mother.plot
+i) plot the # antennas, MCS selection, and success rate of each scheme
+    codes:
+      analyze_output.pl
+        - plot_analysis_ant.mother.plot
+        - plot_analysis_mcs.mother.plot
+        - plot_analysis_succ.mother.plot
+
+    input: 
+      Prediction/Data/...
+
+    output:
+      Prediction/Scripts/plot_dir/analysis_data
+      Prediction/Scripts/plot_dir/analysis_figures
+
+ii) plot the throughput and energy of schemes (w/o PPR)
+    codes
+      plot_trace2scheme.pl
+        - plot_ppr_trace2scheme.mother.plot
+    
+    input: 
+      Prediction/ProcessedData/
+
+    output:
+      Prediction/Scripts/plot_dir/data
+      Prediction/Scripts/plot_dir/figures
+
+iii) plot the throughput and energy of PPR schemes 
+    codes:
+      plot_ppr_trace2scheme.pl
+        - plot_trace2scheme.mother.plot
+
+    input: 
+      Prediction/PPrProcessedData/
+
+    output:
+      Prediction/Scripts/plot_dir/ppr_data
+      Prediction/Scripts/plot_dir/ppr_figures
+
+iv) plot the throughput and energy of optimizing RX, TX only, or both
+    codes:
+      plot_txrx.pl
+        - plot_txrx.mother.plot
+
+    input: 
+      Prediction/ProcessedData/
+
+    output:
+      Prediction/Scripts/plot_dir/txrx_data
+      Prediction/Scripts/plot_dir/txrx_figures
 
 
 #####

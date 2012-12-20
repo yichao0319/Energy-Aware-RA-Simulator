@@ -38,6 +38,8 @@ def calc_energy(mode,modulation,ber,card,trv,pktsize,recv_data):
         nant = [get_ntx_from_key(m) for m in mode]
     elif trv=='rx':
         nant = [get_nrx_from_key(m) for m in mode]
+    elif trv == 'tx_rx':
+        nant = [(get_ntx_from_key(m),get_nrx_from_key(m)) for m in mode]
     else:
         print "this should never happen"
     nss = [get_nss_from_key(m) for m in mode]
@@ -57,7 +59,7 @@ def mcs2mod(mcs): return MODULATION[mcs%8]
 def eval_protocol(file,card,trv):
 
     data = parsefile(file)
- 
+
     recv_data = [line['data'] for line in data]
     mcs = [line['mcs'] for line in data]   
     mode = [line['mode'] for line in data]   
@@ -65,12 +67,18 @@ def eval_protocol(file,card,trv):
 
     pktsize = 1000 #Bytes
     ber=[1.0 - (rdata/pktsize) for rdata in recv_data]
-    # energy needs to be calculated
-    eng_per_bit = calc_energy(mode,modulation,ber,card,trv,pktsize,recv_data)
-
     tput = calc_tput(mode,modulation,ber,pktsize,recv_data)
-    return {'tput':tput, 'eng':eng_per_bit}
- 
+
+    # energy needs to be calculated
+    # eng_per_bit = calc_energy(mode,modulation,ber,card,trv,pktsize,recv_data)
+    # return {'tput':tput, 'eng':eng_per_bit}
+    eng_per_bit_rx = calc_energy(mode, modulation, ber, card, 'rx', pktsize, recv_data)
+    eng_per_bit_tx = calc_energy(mode, modulation, ber, card, 'tx', pktsize, recv_data)
+    eng_per_bit_sum = eng_per_bit_rx + eng_per_bit_tx
+
+    return {'tput':tput, 'eng':eng_per_bit_sum, 'eng_rx': eng_per_bit_rx, 'eng_tx': eng_per_bit_tx}
+
+
 def get_file_data(path,filename,card,trv):
 
     try:
@@ -99,12 +107,10 @@ def main():
     # channames = ['mob_recv1_run1_01', 'mob_recv2_run1_01', 'mob_recv3_run1_01', 'mob_recv4_run1_01']
     channames = ['sender1_lap1_seg1_mix1', 'sender1_lap1_seg2_mix1', 'sender1_lap1_seg3_mix1']
 
-    # protocols =['PPrMaxTput','PPrMinEng','PPrEngTput10','PPrEngTput09','PPrEngTput08','PPrEngTput07','PPrEngTput06','PPrEngTput05','PPrEngTput04','PPrEngTput03','PPrEngTput02','PPrEngTput01']
-    protocols = ['OraclePPrMaxTput', 'OraclePPrMinEng','OraclePPrEngTput10','OraclePPrEngTput09','OraclePPrEngTput08','OraclePPrEngTput07','OraclePPrEngTput06','OraclePPrEngTput05','OraclePPrEngTput04','OraclePPrEngTput03','OraclePPrEngTput02','OraclePPrEngTput01']
+    protocols =['PPrMaxTput','PPrMinEng','PPrEngTput10','PPrEngTput09','PPrEngTput08','PPrEngTput07','PPrEngTput06','PPrEngTput05','PPrEngTput04','PPrEngTput03','PPrEngTput02','PPrEngTput01']
+    # protocols = ['OraclePPrMaxTput', 'OraclePPrMinEng','OraclePPrEngTput10','OraclePPrEngTput09','OraclePPrEngTput08','OraclePPrEngTput07','OraclePPrEngTput06','OraclePPrEngTput05','OraclePPrEngTput04','OraclePPrEngTput03','OraclePPrEngTput02','OraclePPrEngTput01']
     card_type=['intel','atheros']
-    #card_type=['intel']
-    eng_cnstrnt=['tx','rx']
-    #eng_cnstrnt=['tx']
+    eng_cnstrnt=['tx', 'rx', 'tx_rx']
     prediction = ['False', 'True']  # ,'False'
 
     finaldata={}
