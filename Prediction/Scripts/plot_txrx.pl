@@ -29,9 +29,10 @@ my @mobile_traces4 = ('sender1_lap1_seg1_mix1', 'sender1_lap1_seg2_mix1', 'sende
 # my @traces = (@static_traces, @mobile_traces, @mobile_traces2, @mobile_traces3, @mobile_traces4, @static_traces2);
 my @traces = (@mobile_traces4, @static_traces2);
 
-my @schemes = ("MinEng", "MaxTput");
+my @schemes = ("MinEng", "MaxTput", "EngTput08", "EngTput06");
 my @card_types = ("atheros", "intel");
-my @constraints = ("tx", "rx", "tx_rx");
+# my @constraints = ("tx", "rx", "tx_rx");
+my @constraints = ("tx_rx");
 my @predictions = ("True", "False");
 
 
@@ -177,17 +178,17 @@ sub write_to_file_throughput {
         print $trace.", " if($DEBUG1);
         print FH "\"$type $trace_i\", ";
 
+        ## MinEng
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{throughput}.", ";
+
         ## MaxTput
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MaxTput'}{throughput}.", ";
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MaxTput'}{throughput}.", ";
         
-        ## MinEng, TX
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MinEng'}{throughput}.", ";
+        ## ETput80
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'EngTput08'}{throughput}.", ";
 
-        ## MinEng, RX
-        print FH $ref_data->{'rx'}{$trace}{$pred}{'MinEng'}{throughput}.", ";
-
-        ## MinEng, TX_RX
-        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{throughput}."\n";
+        ## ETput60
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'EngTput06'}{throughput}."\n";
     }
     print "\n" if($DEBUG1);
 
@@ -208,25 +209,17 @@ sub write_to_file_energy {
         print $trace.", " if($DEBUG1);
         print FH "\"$type $trace_i\", ";
 
+        ## MinEng
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{energy_tx_rx}.", ";
+
         ## MaxTput
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MaxTput'}{energy_tx}.", ";
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MaxTput'}{energy_rx}.", ";
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MaxTput'}{energy_tx_rx}.", ";
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MaxTput'}{energy_tx_rx}.", ";
         
-        ## MinEng, TX
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MinEng'}{energy_tx}.", ";
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MinEng'}{energy_rx}.", ";
-        print FH $ref_data->{'tx'}{$trace}{$pred}{'MinEng'}{energy_tx_rx}.", ";
+        ## ETput80
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'EngTput08'}{energy_tx_rx}.", ";
 
-        ## MinEng, RX
-        print FH $ref_data->{'rx'}{$trace}{$pred}{'MinEng'}{energy_tx}.", ";
-        print FH $ref_data->{'rx'}{$trace}{$pred}{'MinEng'}{energy_rx}.", ";
-        print FH $ref_data->{'rx'}{$trace}{$pred}{'MinEng'}{energy_tx_rx}.", ";
-
-        ## MinEng, TX_RX
-        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{energy_tx}.", ";
-        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{energy_rx}.", ";
-        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'MinEng'}{energy_tx_rx}."\n";
+        ## ETput60
+        print FH $ref_data->{'tx_rx'}{$trace}{$pred}{'EngTput06'}{energy_tx_rx}."\n";
 
     }
     print "\n" if($DEBUG1);

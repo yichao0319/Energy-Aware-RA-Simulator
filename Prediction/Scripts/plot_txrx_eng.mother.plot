@@ -24,17 +24,7 @@ set output fig_dir."XXX_FILE.eps"
 
 
 plot \
-data_dir.'XXX_FILE.txt' using 2:xtic(1) t '{/Helvetica=28 MaxTput,tx}', \
-data_dir.'XXX_FILE.txt' using 3:xtic(1) t '{/Helvetica=28 MaxTput,rx}', \
-data_dir.'XXX_FILE.txt' using 4:xtic(1) t '{/Helvetica=28 MaxTput,sum}', \
-data_dir.'XXX_FILE.txt' using 5:xtic(1) t '{/Helvetica=28 MinEng-TX,tx}', \
-data_dir.'XXX_FILE.txt' using 6:xtic(1) t '{/Helvetica=28 MinEng-TX,rx}', \
-data_dir.'XXX_FILE.txt' using 7:xtic(1) t '{/Helvetica=28 MinEng-TX,sum}', \
-data_dir.'XXX_FILE.txt' using 8:xtic(1) t '{/Helvetica=28 MinEng-RX,tx}', \
-data_dir.'XXX_FILE.txt' using 9:xtic(1) t '{/Helvetica=28 MinEng-RX,rx}', \
-data_dir.'XXX_FILE.txt' using 10:xtic(1) t '{/Helvetica=28 MinEng-RX,sum}', \
-data_dir.'XXX_FILE.txt' using 11:xtic(1) t '{/Helvetica=28 MinEng-BOTH,tx}', \
-data_dir.'XXX_FILE.txt' using 12:xtic(1) t '{/Helvetica=28 MinEng-BOTH,rx}', \
-data_dir.'XXX_FILE.txt' using 13:xtic(1) t '{/Helvetica=28 MinEng-BOTH,sum}'
-
-
+data_dir.'XXX_FILE.txt' using 2:xtic(1) t '{/Helvetica=28 MinEng}', \
+data_dir.'XXX_FILE.txt' using 3:xtic(1) t '{/Helvetica=28 MaxTput}', \
+data_dir.'XXX_FILE.txt' using 4:xtic(1) t '{/Helvetica=28 ETput80}', \
+data_dir.'XXX_FILE.txt' using 5:xtic(1) t '{/Helvetica=28 ETput60}'

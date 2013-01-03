@@ -16,6 +16,23 @@ data_dir = "./"
 fig_dir = "../testbed_figures/"
 set output fig_dir."testbed_mobile_tx_mcs_trend.eps"
 
+
+set style arrow 1 nohead lc rgb "black" lw 1 lt 1
+set arrow from 14,0 to 14,25 as 1
+set arrow from 104,0 to 104,25 as 1
+set arrow from 153,0 to 153,20 as 1
+
+
+set label '{/Helvetica=22 R1}' at 1,10 left
+set label '{/Helvetica=22 xx%}' at 1,8 left
+set label '{/Helvetica=22 R2}' at 55,10 left
+set label '{/Helvetica=22 xx%}' at 55,8 left
+set label '{/Helvetica=22 R3}' at 125,10 left
+set label '{/Helvetica=22 xx%}' at 125,8 left
+set label '{/Helvetica=22 R4}' at 170,10 left
+set label '{/Helvetica=22 xx%}' at 170,8 left
+
+
 set style line 1 lc rgb "#FF0000" lt 1 lw 3
 set style line 2 lc rgb "#0000FF" lt 2 lw 3
 set style line 3 lc rgb "orange" lt 1 lw 3

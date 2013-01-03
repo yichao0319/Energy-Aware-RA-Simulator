@@ -24,7 +24,7 @@ data_dir = "../txrx_data/"
 
 
 plot [-10:-10.0001][-100:-100.001] \
-data_dir.'static_intel.txrx.tput.txt' using 2:xtic(1) t '{/Helvetica=28 MaxTput}', \
-data_dir.'static_intel.txrx.tput.txt' using 3:xtic(1) t '{/Helvetica=28 MinEng-TX}', \
-data_dir.'static_intel.txrx.tput.txt' using 4:xtic(1) t '{/Helvetica=28 MinEng-RX}', \
-data_dir.'static_intel.txrx.tput.txt' using 5:xtic(1) t '{/Helvetica=28 MinEng-BOTH}'
+data_dir.'static_intel.txrx.tput.txt' using 2:xtic(1) t '{/Helvetica=28 MinEng}', \
+data_dir.'static_intel.txrx.tput.txt' using 3:xtic(1) t '{/Helvetica=28 MaxTput}', \
+data_dir.'static_intel.txrx.tput.txt' using 4:xtic(1) t '{/Helvetica=28 ETput80}', \
+data_dir.'static_intel.txrx.tput.txt' using 5:xtic(1) t '{/Helvetica=28 ETput60}'

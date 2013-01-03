@@ -17,17 +17,21 @@ fig_dir = "../measurement_figures/"
 set output fig_dir."phone-tx-ettvs-energy.eps"
 
 
-set xrange [0.004:0.016]
-set yrange [0:0.009]
-set xtics 0.003
-set ytics 0.002
+set yrange [0.004:0.016]
+set xrange [0:0.009]
+set ytics 0.003
+set xtics 0.002
 
 
 set pointsize 1.5
 
-plot data_dir."phone_data.dat.out" using 1:2 with linespoints lt 1 lc rgb "red" lw 3 pt 4 title "1 Ant", \
-     data_dir."phone_data.dat.out" using 3:4 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
-     data_dir."phone_data.dat.out" using 5:6 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
-     data_dir."phone_data.dat.out" using 7:8 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle
+#plot data_dir."phone_data.dat.out" using 1:2 with linespoints lt 1 lc rgb "red" lw 3 pt 4 title "1 Ant", \
+#     data_dir."phone_data.dat.out" using 3:4 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
+#     data_dir."phone_data.dat.out" using 5:6 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
+#     data_dir."phone_data.dat.out" using 7:8 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle
      
+plot data_dir."phone_data.dat.out" using 2:1 with linespoints lt 1 lc rgb "red" lw 3 pt 4 title "1 Ant", \
+     data_dir."phone_data.dat.out" using 4:3 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
+     data_dir."phone_data.dat.out" using 6:5 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle, \
+     data_dir."phone_data.dat.out" using 8:7 with linespoints lt 1 lc rgb "red" lw 3 pt 4 notitle
      
